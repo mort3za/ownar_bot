@@ -1,3 +1,5 @@
+const bot = require('../bot');
+const actions = require('../actions');
 // const Markup = require('telegraf/markup')
 
 const markerCreate = ({answerCbQuery, reply}) => {
@@ -5,4 +7,6 @@ const markerCreate = ({answerCbQuery, reply}) => {
     reply('Upload a marker now');
 }
 
-module.exports = markerCreate;
+bot.action(actions.marker, markerCreate);
+
+// module.exports = markerCreate;

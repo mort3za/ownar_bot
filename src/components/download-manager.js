@@ -1,17 +1,23 @@
 const Markup = require('telegraf/markup')
 const bot = require('../bot');
+const actions = require('../actions');
 
 const downloadManager = ({reply, answerCbQuery}) => {
     answerCbQuery('');
-    reply('Select a download topic', Markup.keyboard([
-      Markup.callbackButton('Download iOS', 'download-1'),
-      Markup.callbackButton('Download Android', 'download-2'),
+    reply('Select a download topic', Markup.inlineKeyboard([
+      Markup.callbackButton('Download iOS', actions.download1),
+      Markup.callbackButton('Download Android', actions.download2),
     ]).extra())
 }
 
-bot.action('download-1', ({reply, answerCbQuery}) => {
+bot.action(actions.download, downloadManager);
+bot.action(actions.download1, ({reply, answerCbQuery}) => {
   answerCbQuery('');
   reply('Download 1...');
+});
+bot.action(actions.download2, ({reply, answerCbQuery}) => {
+  answerCbQuery('');
+  reply('Download 2...');
 });
 
 module.exports = downloadManager;

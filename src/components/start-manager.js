@@ -1,4 +1,6 @@
 const Markup = require('telegraf/markup')
+const bot = require('../bot');
+const commands = require('../commands');
 
 const startManager = ctx => {
     ctx.reply('SOME DESCRIPTIONS ONCE. Select a module', Markup.inlineKeyboard([
@@ -8,5 +10,7 @@ const startManager = ctx => {
       Markup.callbackButton('Contact', 'contact'),
     ]).extra())
 }
+
+bot.command(commands.start, startManager);
 
 module.exports = startManager;
