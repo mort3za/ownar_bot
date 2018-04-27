@@ -8,7 +8,7 @@ require('./components/create-marker');
 require('./components/help-manager');
 require('./components/download-manager');
 require('./components/contact-manager');
+require('./components/settings-manager');
 bot.command(commands.cancel, leave());
 bot.catch(err => console.log("Ooops", err));
 bot.startPolling();
-module.exports = bot;

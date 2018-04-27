@@ -8,7 +8,9 @@ const startManager = ctx => {
       Markup.callbackButton('Help', 'help'),
       Markup.callbackButton('Download', 'download'),
       Markup.callbackButton('Contact', 'contact'),
-    ]).extra())
+      Markup.callbackButton('Settings', 'settings'),
+      Markup.callbackButton('About', 'about'),
+    ], {columns: 2}).extra())
 }
 
 bot.command(commands.start, startManager);

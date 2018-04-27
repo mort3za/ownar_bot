@@ -10,6 +10,11 @@ const actions = {
   contact: 'contact',
   contact1: 'contact1',
   contact2: 'contact2',
+  settings: 'settings',
+  settings1: 'settings1',
+  settings1_1: 'settings1_1',
+  settings1_2: 'settings1_2',
+  settings2: 'settings2',
 
 };
 module.exports = actions;

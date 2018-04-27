@@ -8,6 +8,7 @@ const stage = new Stage();
 // const stage = new Stage()
 // stage.register(videoWizard);
 // stage.register(startManager);
+
 bot.use(session());
 bot.use(setLanguage);
 bot.use(stage.middleware());

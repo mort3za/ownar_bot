@@ -1,13 +1,15 @@
-// const bot = require('./bot');
-
 const setLanguage = (ctx, next) => {
-  console.log('set lang');
-  ctx.state.language = process.env.LANGUAGE;
+  ctx.session.lang = ctx.session.lang || process.env.APP_LANG;
   return next();
 };
 
-const translate = () => {
-
+const translate = (keyId, lang) => {
+  const strings = require(`../strings/${lang}`);
+  const value = strings[keyId];
+  if (value) {
+    return value;
+  }
+  return 'Translation Not Found';
 }
 
 module.exports = { translate, setLanguage };
