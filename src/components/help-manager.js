@@ -2,15 +2,14 @@ const Markup = require('telegraf/markup')
 const bot = require('../bot');
 const actions = require('../actions');
 
-const helpManager = ({reply, answerCbQuery}) => {
-    answerCbQuery('');
-    reply('Select a help topic', Markup.inlineKeyboard([
+const helpManager = ({reply}) => {
+    reply('Select a help topic', Markup.keyboard([
       Markup.callbackButton('Help 1', actions.help1),
       Markup.callbackButton('Help 2', actions.help2),
     ]).extra())
 }
 
-bot.action(actions.help, helpManager);
+bot.hears(actions.help, helpManager);
 bot.action(actions.help1, ({reply, answerCbQuery}) => {
   answerCbQuery('');
   reply('Help 1...');

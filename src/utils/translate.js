@@ -1,10 +1,6 @@
-const setLanguage = (ctx, next) => {
-  ctx.session.lang = ctx.session.lang || process.env.APP_LANG;
-  return next();
-};
+const strings = require(`../strings/${process.env.APP_LANG}`);
 
-const translate = (keyId, lang) => {
-  const strings = require(`../strings/${lang}`);
+const translate = (keyId) => {
   const value = strings[keyId];
   if (value) {
     return value;
@@ -12,4 +8,4 @@ const translate = (keyId, lang) => {
   return 'Translation Not Found';
 }
 
-module.exports = { translate, setLanguage };
+module.exports = { translate };

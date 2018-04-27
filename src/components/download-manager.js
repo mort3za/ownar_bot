@@ -1,15 +1,15 @@
 const Markup = require("telegraf/markup");
 const bot = require("../bot");
 const actions = require("../actions");
+const {translate} = require("../utils/translate");
 
-const downloadManager = ({ reply, answerCbQuery }) => {
-  answerCbQuery("");
+const downloadManager = ({ reply }) => {
   reply(
-    "Select a download topic",
-    Markup.inlineKeyboard(
+    translate(16),
+    Markup.keyboard(
       [
-        Markup.callbackButton("Download iOS", actions.download1),
-        Markup.callbackButton("Download Android", actions.download2)
+        Markup.callbackButton(translate(17), actions.download1),
+        Markup.callbackButton(translate(18), actions.download2)
       ],
       { columns: 1 }
     )
@@ -18,7 +18,7 @@ const downloadManager = ({ reply, answerCbQuery }) => {
   );
 };
 
-bot.action(actions.download, downloadManager);
+bot.hears(actions.download, downloadManager);
 bot.action(actions.download1, ({ reply, answerCbQuery }) => {
   answerCbQuery("");
   reply("Download 1...");
