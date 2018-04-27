@@ -9,11 +9,10 @@ const download = require('../utils/download');
 const quality = 1; // 0 .. 3
 
 const uploadMarker = new Scene("uploadMarker");
-uploadMarker.on('photo', ({telegram, message}) => {
+uploadMarker.on('photo', async ({telegram, message}) => {
     const photo = message.photo;
-    console.log("got photo", message.photo);
     const file_id = photo[quality].file_id;
-    download({file_id, telegram});
+    const local_path = await download({file_id, telegram});
 });
 uploadMarker.hears(actions.back_0, (ctx) => {
   console.log("leave uploadMarker");
