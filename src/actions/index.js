@@ -14,6 +14,7 @@ const actions = {
   contact2: 'contact2',
   settings: translate(9),
   settings1: 'settings1',
+  back_0: translate(19),
 
 };
 module.exports = actions;

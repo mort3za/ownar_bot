@@ -5,6 +5,8 @@ const { translate } = require("../utils/translate");
 const actions = require('../actions');
 
 const startManager = ctx => {
+  
+  console.log('start...');
 
   ctx.reply(
     translate(14),
