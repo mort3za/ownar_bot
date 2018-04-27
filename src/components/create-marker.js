@@ -5,8 +5,16 @@ const { translate } = require("../utils/translate");
 const Scene = require("telegraf/scenes/base");
 const Stage = require("telegraf/stage");
 const startManager = require('./start-manager');
+const download = require('../utils/download');
+const quality = 1; // 0 .. 3
 
 const uploadMarker = new Scene("uploadMarker");
+uploadMarker.on('photo', ({telegram, message}) => {
+    const photo = message.photo;
+    console.log("got photo", message.photo);
+    const file_id = photo[quality].file_id;
+    download({file_id, telegram});
+});
 uploadMarker.hears(actions.back_0, (ctx) => {
   console.log("leave uploadMarker");
   ctx.scene.leave();
