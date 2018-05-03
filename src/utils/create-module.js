@@ -13,17 +13,17 @@ const createModule = (
       module,
       pageId,
     };
-    const { url: url_1, data: data_1, headers: headers_1 } = requestInterceptor("page/module", _data);
+    const { url, data, headers } = requestInterceptor("page/module", _data);
     
     try {
-      const response_1 = await axios({
+      const response = await axios({
         method: "POST",
-        url: url_1,
-        data: data_1,
-        headers: headers_1
+        url,
+        data,
+        headers
       });
-      responseHandler(undefined, response_1.data, resolve, reject);
-      console.log('on create module', response_1.data);
+      responseHandler(undefined, response.data, resolve, reject);
+      console.log('on create module', response.data);
     } catch (error) {
       responseHandler(error, undefined, resolve, reject); 
     }

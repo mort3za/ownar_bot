@@ -13,7 +13,7 @@ const createPageRequest = require("../utils/create-page");
 const createModuleRequest = require("../utils/create-module");
 
 const uploadMarker = new Scene("uploadMarker");
-uploadMarker.on("photo", async ({ telegram, message, scene, session }) => {
+uploadMarker.on("photo", async ({ telegram, message, scene, session, reply }) => {
   const photo = message.photo;
   const file_id = photo[quality].file_id;
 
@@ -28,9 +28,11 @@ uploadMarker.on("photo", async ({ telegram, message, scene, session }) => {
   }).catch(console.error);
 
   if (!marker) return;
-  const page = await createPageRequest(marker);
+  const pageTitle = `${message.from.id}-${new Date().getTime()}`;
+  const page = await createPageRequest(marker, pageTitle);
   if (!(page && page.pageId)) return;
   session.pageId = page.pageId;
+  await reply(translate(21));
   scene.enter("createModule");
 });
 
@@ -41,7 +43,7 @@ uploadMarker.hears(actions.back_0, ctx => {
 });
 
 const createModule = new Scene("createModule");
-createModule.on("text", ctx => {
+createModule.on("text", () => {
   console.log("------------create module text...------------");
 });
 createModule.on("video", async ({ message, telegram, session }) => {
@@ -55,8 +57,6 @@ createModule.on("video", async ({ message, telegram, session }) => {
     telegram
   }).catch(console.error);
 
-  console.log("assetPath ===>", assetPath);
-
   const { location: upAsset } = await upload({
     data: { myfile: fs.createReadStream(assetPath) }
   }).catch(console.error);
@@ -69,11 +69,10 @@ createModule.on("video", async ({ message, telegram, session }) => {
     top: 0,
     width: 100
   };
-  const upModule = await createModuleRequest(session.pageId, module, {
+  await createModuleRequest(session.pageId, module, {
     title: "Video",
     videourl: upAsset
-  });
-  console.log("upModule", upModule);
+  }).catch(console.error);
 });
 
 const stage = new Stage();
