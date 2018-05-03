@@ -26,8 +26,8 @@ const createPage = (
         data,
         headers
       });
-      console.log("page created...", response);
-      responseHandler(undefined, response, resolve, reject);
+      console.log("page created...", response.data);
+      responseHandler(undefined, response.data, resolve, reject);
     } catch (error) {
       responseHandler(error, undefined, resolve, reject); 
     }
