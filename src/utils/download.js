@@ -27,10 +27,12 @@ async function downloadFile({file_id, telegram}) {
   // return a promise and resolve when download finishes
   return new Promise((resolve, reject) => {
     response.data.on("end", () => {
-      resolve();
+      console.log("end...");
+      resolve({local_path: path});
     });
 
-    response.data.on("error", () => {
+    response.data.on("error", (err) => {
+      console.log('error', err);
       reject();
     });
   });

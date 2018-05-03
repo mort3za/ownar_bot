@@ -1,8 +1,8 @@
 {
   "extends": "eslint:recommended",
   "env": {
-    "browser": true,
-    "commonjs": true,
+    "browser": false,
+    "commonjs": false,
     "es6": true,
     "node": true
   },
@@ -11,7 +11,6 @@
     "ecmaFeatures": {
       "jsx": false
     },
-    "sourceType": "module"
   },
   "rules": {
     "no-this-before-super": "error",
