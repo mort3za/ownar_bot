@@ -27,7 +27,6 @@ async function downloadFile({file_id, telegram}) {
   // return a promise and resolve when download finishes
   return new Promise((resolve, reject) => {
     response.data.on("end", () => {
-      console.log("end...");
       resolve({local_path: path});
     });
 

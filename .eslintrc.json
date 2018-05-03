@@ -10,7 +10,7 @@
     "ecmaVersion": 8,
     "ecmaFeatures": {
       "jsx": false
-    },
+    }
   },
   "rules": {
     "no-this-before-super": "error",

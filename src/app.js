@@ -1,6 +1,3 @@
-// const Stage = require("telegraf/stage");
-// const { leave } = Stage;
-// const commands = require('./commands');
 const bot = require('./bot');
 require('./middlewares');
 require('./components/start-manager');
