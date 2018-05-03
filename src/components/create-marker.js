@@ -8,7 +8,8 @@ const Stage = require("telegraf/stage");
 const startManager = require("./start-manager");
 const download = require("../utils/download");
 const upload = require("../utils/upload");
-const quality = 1; // 0 .. 3
+const quality = 1; // 0 .. 3 FIXME: SET 2
+const createPage = require('../utils/create-page');
 
 const uploadMarker = new Scene("uploadMarker");
 uploadMarker.on("photo", async ({ telegram, message, scene }) => {
@@ -19,12 +20,15 @@ uploadMarker.on("photo", async ({ telegram, message, scene }) => {
     console.error
   );
 
-  await upload({
+  const marker = await upload({
     data: { myfile: fs.createReadStream(markerPath) },
     headers: { from: "page" }
   })
   .catch(console.error);
 
+  if(!marker) return;
+  const page = await createPage(marker);
+  if(!(page && page.pageId)) return;
   scene.enter('createModule');
 });
 

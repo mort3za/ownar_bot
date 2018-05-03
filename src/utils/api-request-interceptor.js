@@ -4,8 +4,13 @@ const interceptor = (apiPath, data = {}, headers = {}) => {
     userId: process.env.USER_ID,
     token: process.env.TOKEN
   };
+  const _headers = {
+    "Accept": "application/json, text/plain, */*",
+    "Content-Type": "text/plain;charset=utf-8"
+  };
   const __data = Object.assign(_data, data);
-  return {data: __data, url, headers}
-}
+  const __headers = Object.assign(_headers, headers);
+  return { data: __data, url, headers: __headers };
+};
 
 module.exports = interceptor;

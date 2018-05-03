@@ -13,10 +13,10 @@ async function uploadFile({ data: _data, headers: _headers = {} }) {
         method: "POST",
         uri: url,
         headers: headers,
-        formData: data
+        formData: data,
+        json: true,
       },
       function(err, response, body) {
-        console.log('body ===>', body);
         responseHandler(err, body, resolve, reject);
       }
     );
