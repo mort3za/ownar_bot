@@ -6,7 +6,7 @@ const createPage = (
   { location: imageAddress, imageIndexId },
   title = String(new Date().getTime())
 ) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const _data = {
       categoryId: process.env.CATEGORY_ID,
       firstCategoryId: process.env.CATEGORY_ID,
@@ -19,19 +19,18 @@ const createPage = (
       title
     };
     const { url, data, headers } = requestInterceptor("create/doCreate", _data);
-    axios({
-      method: "POST",
-      url,
-      data,
-      headers
-    })
-      .then(({ data }) => {
-        console.log("page created...", data);
-        responseHandler(undefined, data, resolve, reject);
-      })
-      .catch(err => {
-        responseHandler(err, undefined, resolve, reject);
+    try {
+      const response = await axios({
+        method: "POST",
+        url,
+        data,
+        headers
       });
+      console.log("page created...", response);
+      responseHandler(undefined, response, resolve, reject);
+    } catch (error) {
+      responseHandler(error, undefined, resolve, reject); 
+    }
   });
 };
 
