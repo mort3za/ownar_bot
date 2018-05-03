@@ -9,23 +9,22 @@ const startManager = require("./start-manager");
 const download = require("../utils/download");
 const upload = require("../utils/upload");
 const quality = 1; // 0 .. 3
-// const createModuleManager = require('./create-module-manager');
 
 const uploadMarker = new Scene("uploadMarker");
 uploadMarker.on("photo", async ({ telegram, message, scene }) => {
   const photo = message.photo;
   const file_id = photo[quality].file_id;
-  // console.log("file_id", file_id);
+
   const { local_path: markerPath } = await download({ file_id, telegram }).catch(
     console.error
   );
 
-  await sleep(1000);
   await upload({
     data: { myfile: fs.createReadStream(markerPath) },
     headers: { from: "page" }
-  }).catch(console.error);
-  
+  })
+  .catch(console.error);
+
   scene.enter('createModule');
 });
 
@@ -58,8 +57,3 @@ const markerCreate = ({ reply, scene }) => {
 };
 
 bot.hears(actions.marker, markerCreate);
-
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}

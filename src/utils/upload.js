@@ -17,7 +17,7 @@ async function uploadFile({ data: _data, headers: _headers = {} }) {
       },
       function(err, response, body) {
         console.log('body ===>', body);
-        responseHandler(body, resolve, reject);
+        responseHandler(err, body, resolve, reject);
       }
     );
   });
