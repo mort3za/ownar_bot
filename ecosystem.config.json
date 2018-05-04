@@ -1,0 +1,15 @@
+{
+  "apps": [{
+    "name": "ownarbot",
+    "script": "./index.js",
+    "max_memory_restart": "2G",
+    "watch": true,
+    "ignore_watch": ["node_modules", "temp"],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_production": {
+      "NODE_ENV": "production"
+    }
+  }]
+}

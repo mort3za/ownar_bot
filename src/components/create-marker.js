@@ -19,11 +19,13 @@ uploadMarker.on("photo", async (ctx) => {
   const photo = message.photo;
   const file_id = photo[quality].file_id;
   session.marker = photo;
+  reply(translate(27));
 
   const { local_path: markerPath } = await download({
     file_id,
     telegram
   }).catch(console.error);
+  // console.log('markerPath', markerPath);
 
   const marker = await upload({
     data: { myfile: fs.createReadStream(markerPath) },
@@ -33,6 +35,7 @@ uploadMarker.on("photo", async (ctx) => {
   if (!marker) return;
   const pageTitle = `${message.from.id}-${new Date().getTime()}`;
   const page = await createPageRequest(marker, pageTitle);
+  // console.log('page', page);
   if (!(page && page.pageId)) return;
   session.pageId = page.pageId;
   await reply(translate(21));

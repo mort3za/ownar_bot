@@ -1,3 +1,4 @@
+console.log("start bot.");
 const bot = require('./bot');
 require('./middlewares');
 require('./components/start-manager');
