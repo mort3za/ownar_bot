@@ -11,11 +11,15 @@ const upload = require("../utils/upload");
 const quality = 1; // 0 .. 3 FIXME: SET 2
 const createPageRequest = require("../utils/create-page");
 const createModuleRequest = require("../utils/create-module");
+const finalManager = require('./final-manager');
 
 const uploadMarker = new Scene("uploadMarker");
-uploadMarker.on("photo", async ({ telegram, message, scene, session, reply }) => {
+uploadMarker.on("photo", async (ctx) => {
+  const { telegram, message, scene, session, reply } = ctx;
   const photo = message.photo;
+  console.log('photo', photo);
   const file_id = photo[quality].file_id;
+  session.marker = photo;
 
   const { local_path: markerPath } = await download({
     file_id,
@@ -38,6 +42,7 @@ uploadMarker.on("photo", async ({ telegram, message, scene, session, reply }) =>
 
 uploadMarker.hears(actions.back_0, ctx => {
   console.log("leave uploadMarker");
+  ctx.session.pageId = null;
   ctx.scene.leave();
   startManager(ctx);
 });
@@ -46,7 +51,8 @@ const createModule = new Scene("createModule");
 createModule.on("text", () => {
   console.log("------------create module text...------------");
 });
-createModule.on("video", async ({ message, telegram, session }) => {
+createModule.on("video", async (ctx) => {
+  const { message, telegram, session } = ctx;
   const video = message.video;
   const file_id = video.file_id;
   console.log("------------ create module video... ------------");
@@ -73,6 +79,8 @@ createModule.on("video", async ({ message, telegram, session }) => {
     title: "Video",
     videourl: upAsset
   }).catch(console.error);
+
+  finalManager(ctx);
 });
 
 const stage = new Stage();
