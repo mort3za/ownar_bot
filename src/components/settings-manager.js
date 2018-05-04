@@ -1,12 +1,10 @@
-const Markup = require('telegraf/markup')
 const bot = require('../bot');
 const actions = require('../actions');
 const { translate } = require("../utils/translate");
+const { setAccount: setAccountKeyboard } = require('../utils/keyboards');
 
 const settingsManager = ({reply}) => {
-    reply(translate(20), Markup.keyboard([
-      Markup.callbackButton('Set Account', actions.settings2),
-    ]).extra())
+    reply(translate(20), setAccountKeyboard)
 }
 
 bot.hears(actions.settings, settingsManager);

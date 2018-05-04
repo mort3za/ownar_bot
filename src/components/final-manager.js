@@ -4,17 +4,15 @@ const { translate } = require("../utils/translate");
 const actions = require("../actions");
 const quality = 1; // 1..3
 const reset = require("../utils/reset-marker-session");
-const {start: startKeyboard} = require('../utils/keyboards');
+const {
+  start: startKeyboard,
+  final: finalKeyboard
+} = require("../utils/keyboards");
 
 const finalManager = ctx => {
   console.log("final...");
 
-  ctx.reply(
-    translate(24),
-    Markup.inlineKeyboard([
-      Markup.callbackButton(translate(22), actions.finish_marker)
-    ])
-  );
+  ctx.reply(translate(24), finalKeyboard);
 };
 
 const doFinalStep = async ctx => {

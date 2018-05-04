@@ -1,16 +1,10 @@
-const Markup = require("telegraf/markup");
 const bot = require("../bot");
 const actions = require("../actions");
 const { translate } = require("../utils/translate");
+const { contact: contactKeyboard } = require("../utils/keyboards");
 
 const contactManager = ({ reply }) => {
-  reply(
-    translate(5),
-    Markup.inlineKeyboard([
-      Markup.callbackButton("Email", actions.contact1),
-      Markup.callbackButton("Telegram", actions.contact2),
-    ]).extra()
-  );
+  reply(translate(5), contactKeyboard);
 };
 
 bot.hears(actions.contact, contactManager);

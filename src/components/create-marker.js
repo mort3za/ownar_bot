@@ -1,7 +1,6 @@
 const fs = require("fs");
 const bot = require("../bot");
 const actions = require("../actions");
-const Markup = require("telegraf/markup");
 const { translate } = require("../utils/translate");
 const Scene = require("telegraf/scenes/base");
 const Stage = require("telegraf/stage");
@@ -12,12 +11,12 @@ const quality = 1; // 0 .. 3 FIXME: SET 2
 const createPageRequest = require("../utils/create-page");
 const createModuleRequest = require("../utils/create-module");
 const finalManager = require('./final-manager');
+const { back: backKeyboard } = require('../utils/keyboards');
 
 const uploadMarker = new Scene("uploadMarker");
 uploadMarker.on("photo", async (ctx) => {
   const { telegram, message, scene, session, reply } = ctx;
   const photo = message.photo;
-  console.log('photo', photo);
   const file_id = photo[quality].file_id;
   session.marker = photo;
 
@@ -41,7 +40,6 @@ uploadMarker.on("photo", async (ctx) => {
 });
 
 uploadMarker.hears(actions.back_0, ctx => {
-  console.log("leave uploadMarker");
   ctx.session.pageId = null;
   ctx.scene.leave();
   startManager(ctx);
@@ -49,14 +47,12 @@ uploadMarker.hears(actions.back_0, ctx => {
 
 const createModule = new Scene("createModule");
 createModule.on("text", () => {
-  console.log("------------create module text...------------");
+  console.log("TODO:------------create module text...------------");
 });
 createModule.on("video", async (ctx) => {
   const { message, telegram, session } = ctx;
   const video = message.video;
   const file_id = video.file_id;
-  console.log("------------ create module video... ------------");
-  console.log("video", JSON.stringify(video, undefined, 2));
 
   const { local_path: assetPath } = await download({
     file_id,
@@ -91,12 +87,7 @@ bot.use(stage.middleware());
 const markerCreate = ({ reply, scene }) => {
   reply(
     translate(4),
-    Markup.keyboard([Markup.callbackButton(translate(19), actions.back_0)], {
-      columns: 2
-    })
-      .oneTime()
-      .resize()
-      .extra()
+    backKeyboard
   ).then(() => scene.enter("uploadMarker"));
 };
 
