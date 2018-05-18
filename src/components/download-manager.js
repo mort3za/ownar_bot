@@ -8,13 +8,11 @@ const downloadManager = ({ reply }) => {
 };
 
 bot.hears(actions.download, downloadManager);
-bot.action(actions.download1, ({ reply, answerCbQuery }) => {
-  answerCbQuery("");
-  reply("Download 1...");
+bot.hears(actions.download1, ({ reply }) => {
+  reply(translate(40));
 });
-bot.action(actions.download2, ({ reply, answerCbQuery }) => {
-  answerCbQuery("");
-  reply("Download 2...");
+bot.hears(actions.download2, ({ reply }) => {
+  reply(translate(39));
 });
 
 module.exports = downloadManager;
