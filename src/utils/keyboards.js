@@ -18,11 +18,8 @@ const keyboards = {
     .resize()
     .extra(),
 
-  back: Markup.keyboard(
-    [Markup.callbackButton(translate(19), actions.back_0)],
-    {
-      columns: 2
-    }
+  cancelMarker: Markup.keyboard(
+    [Markup.callbackButton(translate(38), actions.back_1)]
   )
     .oneTime()
     .resize()
@@ -48,13 +45,19 @@ const keyboards = {
     .extra(),
 
   help: Markup.keyboard([
-    Markup.callbackButton("Help 1", actions.help1),
-    Markup.callbackButton("Help 2", actions.help2)
-  ]).extra(),
+    Markup.callbackButton(translate(29), actions.help1),
+    Markup.callbackButton(translate(31), actions.help2),
+    Markup.callbackButton(translate(33), actions.help3),
+    Markup.callbackButton(translate(35), actions.help4),
+    Markup.callbackButton(translate(19), actions.back_0)
+  ],
+  { columns: 2 })
+  .resize()
+  .extra(),
 
   final: Markup.inlineKeyboard([
     Markup.callbackButton(translate(22), actions.finish_marker)
-  ])
+  ]).extra()
 };
 
 module.exports = keyboards;

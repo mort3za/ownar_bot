@@ -11,7 +11,8 @@ const quality = 1; // 0 .. 3 FIXME: SET 2
 const createPageRequest = require("../utils/create-page");
 const createModuleRequest = require("../utils/create-module");
 const finalManager = require('./final-manager');
-const { back: backKeyboard } = require('../utils/keyboards');
+const reset = require("../utils/reset-marker-session");
+const { cancelMarker: cancelKeyboard } = require('../utils/keyboards');
 
 const uploadMarker = new Scene("uploadMarker");
 uploadMarker.on("photo", async (ctx) => {
@@ -42,8 +43,8 @@ uploadMarker.on("photo", async (ctx) => {
   scene.enter("createModule");
 });
 
-uploadMarker.hears(actions.back_0, ctx => {
-  ctx.session.pageId = null;
+uploadMarker.hears(actions.back_1, ctx => {
+  reset(ctx);
   ctx.scene.leave();
   startManager(ctx);
 });
@@ -90,7 +91,7 @@ bot.use(stage.middleware());
 const markerCreate = ({ reply, scene }) => {
   reply(
     translate(4),
-    backKeyboard
+    cancelKeyboard
   ).then(() => scene.enter("uploadMarker"));
 };
 

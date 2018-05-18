@@ -1,4 +1,3 @@
-const Markup = require("telegraf/markup");
 const bot = require("../bot");
 const { translate } = require("../utils/translate");
 const actions = require("../actions");
@@ -10,18 +9,22 @@ const {
 } = require("../utils/keyboards");
 
 const finalManager = ctx => {
-  console.log("final...");
-
   ctx.reply(translate(24), finalKeyboard);
 };
 
 const doFinalStep = async ctx => {
-  const { reply, replyWithPhoto, session, scene } = ctx;
-  const file_id = session.marker[quality].file_id;
-  await replyWithPhoto(file_id, { caption: translate(25) });
-  reply(translate(26), startKeyboard);
-  reset(ctx);
-  scene.leave();
+  console.log("do final step");
+  const { reply, replyWithPhoto, session, scene, answerCbQuery } = ctx;
+  let file_id;
+  try {
+    file_id = session.marker[quality].file_id;
+    await replyWithPhoto(file_id, { caption: translate(25) });
+    reply(translate(26), startKeyboard);
+    reset(ctx);
+    scene.leave();
+  } catch (e) {
+    answerCbQuery(translate(28));
+  }
 };
 
 bot.action(actions.finish_marker, doFinalStep);
