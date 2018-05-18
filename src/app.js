@@ -1,4 +1,5 @@
 console.log("start bot.");
+require("babel-polyfill");
 const bot = require('./bot');
 require('./middlewares');
 require('./components/start-manager');
